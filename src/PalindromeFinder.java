@@ -1,11 +1,14 @@
 package src;
 
+import java.util.ArrayList;
+
 public class PalindromeFinder {
 
 	private final String theNum;
 	private final int theBase;
 	public String answer, noneResult;
 	public int lastNum;
+	public ArrayList<String> answers;
 	
 	/**
 	 * Constructs a Palindrome Finding Object
@@ -15,6 +18,13 @@ public class PalindromeFinder {
 	public PalindromeFinder(String num, int base){
 		theNum = num;
 		theBase = base;
+	}
+	
+	/**public PalindromeFinder(ArrayList<String> list){
+		theNum = "-1";
+		theBase = -1;
+		answers = new ArrayList<String>();
+		parseInput(list);
 	}
 	
 	/**

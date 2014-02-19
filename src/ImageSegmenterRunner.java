@@ -35,13 +35,6 @@ public class ImageSegmenterRunner {
 		}
 	}
 	
-	private static ArrayList<String> readInFile(String fileName) throws IOException{
-		//System.out.println(Paths.get(fileName));
-		List<String> text = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-		//System.out.println("do we get here");
-		return new ArrayList<String>(text);
-	}
-	
 	private static void printOutFractions(int length, int[] groupLengths){
 		double lengthDub = (double) length;
 		//System.out.println(lengthDub);
@@ -54,5 +47,11 @@ public class ImageSegmenterRunner {
 			System.out.println(fractionStr);
 		}
 	}
-
+	
+	private static ArrayList<String> readInFile(String fileName) throws IOException{
+		//System.out.println(Paths.get(fileName));
+		List<String> text = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+		//System.out.println("do we get here");
+		return new ArrayList<String>(text);
+	}
 }

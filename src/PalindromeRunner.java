@@ -15,10 +15,15 @@ public class PalindromeRunner {
 		/**PalindromeFinder pf = new PalindromeFinder(values[0][0], convertThatBase(values[0][1]));
 		System.out.println(pf.findPalindrome());
 		//*/
+		/**
 		for(int i = 0; i < values.length; i++){
 			PalindromeFinder pf = new PalindromeFinder(values[i][0], convertThatBase(values[i][1]));
 			System.out.println(pf.getAnswer(pf.findPalindrome()));
 		}//*/
+		String num = args[0];
+		int base = convertThatBase(args[1]);
+		PalindromeFinder pf = new PalindromeFinder(num, base);
+		System.out.println(pf.getAnswer(pf.findPalindrome()));
 	}
 	
 	/**
