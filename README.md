@@ -13,6 +13,7 @@ Changelog:
 2014-02-21 UPDATE:
 +Finished Nautical Navigation
 +Added a single runner class that can run all programs using Terminal
+-Removed separate runner classes (just use the main runner class with command line arguments pls)
 
 2014-02-14 UPDATE:
 +Finished Image Segmentation Using Clusters.
