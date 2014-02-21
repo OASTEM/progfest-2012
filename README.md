@@ -10,8 +10,12 @@ Also update this readme with the changelog
 Answering the 2012 set of progfest problems
 
 Changelog:
+2014-02-21 UPDATE:
++Finished Nautical Navigation
++Added a single runner class that can run all programs using Terminal
+
 2014-02-14 UPDATE:
--Finished Image Segmentation Using Clusters.
++Finished Image Segmentation Using Clusters.
 
 2014-02-12 UPDATE:
--Finished Perfectly Produced Palindromes.
++Finished Perfectly Produced Palindromes.
