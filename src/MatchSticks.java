@@ -12,7 +12,8 @@ public class MatchSticks {
 	// in terms of creating the large numbers, we will likely use
 	// recursion. the only other option is to find some way that
 	// enables us to find out how many numbers using some sort of modular
-	// formula. We should take the number of sticks we have and teset u
+	// formula. We should take the number of sticks we have and test what
+	// numbers keep it under the thing.
 	private int[] numberSticks = { 6,2,5,5,4,5,6,3,7,5 };
 	private int numberOfSticks;
 	
