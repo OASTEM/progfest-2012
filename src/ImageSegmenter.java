@@ -5,14 +5,30 @@ import java.util.HashMap;
 
 public class ImageSegmenter {
 
+	// base name for a cluster group
 	public static final String CLUSTER_NAME = "Cluster ";
-	public static final double DOUBLE_THRESHOLD = 0.0005; 
+	
+	// threshold for double comparison
+	public static final double DOUBLE_THRESHOLD = 0.0005;
+	
+	// if we dont have anymore changes, this be true
 	public boolean isConverged = false;
+	
+	// the list of particles
 	private ArrayList<double[]> particleList;
+	
+	// cluster lists:
+	// centerClusters -> list of the centers clusters
+	// clusterGroup -> list of clustergroups
+	// clusterKey -> list of the keys for the hashmap
 	private HashMap<String, double[]> centerClusters;
 	private HashMap<String, ArrayList<double[]>> clusterGroup;
 	private ArrayList<String> clusterKey;
 	
+	/**
+	 * Constructor
+	 * @param list The list to parse (input)
+	 */
 	public ImageSegmenter(ArrayList<String> list){
 		centerClusters = new HashMap<String, double[]>();
 		clusterKey = new ArrayList<String>();
@@ -22,6 +38,14 @@ public class ImageSegmenter {
 		formGroups();
 	}
 	
+	/**
+	 * Using a double array and how many clusters we got to add the 
+	 * cluster data into the cluster centers list, the cluster groups list,
+	 * and the clusterkey list
+	 * @param center the center cluster array
+	 * @param centerClusterCount the center cluster number we are at
+	 * @param addKeys true if this is our first time adding clusters, false if we are just consolidating
+	 */
 	private void addCenterCluster(double[] center, int centerClusterCount, boolean addKeys){
 		String clusterName = CLUSTER_NAME + centerClusterCount;
 		centerClusters.put(clusterName, center);
@@ -31,6 +55,11 @@ public class ImageSegmenter {
 		}
 	}
 	
+	/**
+	 * Assign the new centers by using the averages and creating
+	 * a new cluster
+	 * Clears the centers and groups lists to prep them for new data 
+	 */
 	private void assignNewCenters(){
 		ArrayList<double[]> tempCenter = new ArrayList<double[]>();	
 		int index = 0;
@@ -44,6 +73,11 @@ public class ImageSegmenter {
 		}
 	}
 	
+	/**
+	 * Changes a string into a double
+	 * @param num the number as a String
+	 * @return the number as a double
+	 */
 	private double changeStringToDouble(String num){
 		try{
 			double beenDoubled = Double.parseDouble(num);
@@ -54,6 +88,12 @@ public class ImageSegmenter {
 		}
 	}
 	
+	/**
+	 * quickly checks if the array changed
+	 * @param newGroup the list after consolidating
+	 * @param oldGroup the list before consolidating
+	 * @return true if there is no change, false if there is
+	 */
 	private boolean checkIfNoChange(ArrayList<double[]> newGroup, ArrayList<double[]> oldGroup){
 		if(newGroup.size() == oldGroup.size()){
 			for(int i = 0; i < newGroup.size(); i++){
@@ -66,6 +106,12 @@ public class ImageSegmenter {
 		return false;
 	}
 	
+	/**
+	 * compares two double arrays
+	 * @param arrayOne an array
+	 * @param arrayTwo another array
+	 * @return true if the arrays are the same, false if the arrays are different
+	 */
 	private boolean compareDoubleArrays(double[] arrayOne, double[] arrayTwo){
 		for(int i = 0; i < arrayOne.length;i++){
 			if(Math.abs(arrayOne[i] - arrayTwo[i]) > DOUBLE_THRESHOLD){
@@ -75,6 +121,12 @@ public class ImageSegmenter {
 		return true;
 	}
 	
+	/**
+	 * constantly assigns pixels to cluster center groups,
+	 * creates new centers
+	 * and assigns pixels to those centers 
+	 * until no more changes
+	 */
 	public void consolidatePixels(){
 		isConverged = true;
 		HashMap<String, ArrayList<double[]>> toCompare = new HashMap<String, ArrayList<double[]>>(clusterGroup);
@@ -86,6 +138,11 @@ public class ImageSegmenter {
 		}
 	}
 	
+	/**
+	 * converts an acceptable String into a cluster center 
+	 * (must be for a center cluster data)
+	 * @param centerCluster the String to make a center cluster
+	 */
 	private void convertCenterCluster(String centerCluster){
 		int commaCount = 0;
 		int index = 0;
@@ -110,6 +167,11 @@ public class ImageSegmenter {
 		}
 	}
 	
+	/**
+	 * converts the list into a double array list, adding it to 
+	 * the particle list data
+	 * @param list the list to be converted
+	 */
 	private void convertToDouble(ArrayList<String> list){
 		convertCenterCluster(list.get(0));
 		for(int i = 1; i < list.size(); i++){
@@ -121,6 +183,13 @@ public class ImageSegmenter {
 		}
 	}
 	
+	/**
+	 * creates a new center cluster by averaging the corresponding
+	 * cluster group data
+	 * @param pixelGroup the group of pixels
+	 * @param index the corresponding data (RGB) to average
+	 * @return a double array representing the new cluster center
+	 */
 	private double[] createNewCenterCluster(ArrayList<double[]> pixelGroup, int index){
 		double sum = 0.0;
 		double count = 0.0;
@@ -141,6 +210,11 @@ public class ImageSegmenter {
 		return newCenter;
 	}
 	
+	/**
+	 * finds which cluster is the closest to the pixel
+	 * @param pixel the pixel we need to get center
+	 * @return The key of the group that the pixel is closest to
+	 */
 	private String findClosestClusterCenter(double[] pixel){
 		String lowestKey = clusterKey.get(0);
 		double lowest = getClusterDistance(centerClusters.get(lowestKey), pixel);
@@ -155,6 +229,11 @@ public class ImageSegmenter {
 		return lowestKey;
 	}
 	
+	/**
+	 * 
+	 * @param doubles
+	 * @return
+	 */
 	private double[] formDoubleArray(String doubles){
 		double[] temp = new double[3];
 		int index = 0;
